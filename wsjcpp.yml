@@ -1,7 +1,7 @@
 name: "guitar-solo-part-generator"
 version: v0.1.3
 cmake_minimum_required: "3.0"
-cmake_cxx_standard: "11"
+cmake_cxx_standard: "17"
 description: "1"
 
 authors:
