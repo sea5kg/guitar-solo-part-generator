@@ -8,6 +8,15 @@ function TabulaturEditor(elementId) {
     self.countOfStirngs = 6;
     self.guitarTunings = ["E4", "B3", "G3", "D3", "A2", "E2"];  // classic
     self.notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+    self.fontSize = 12;
+    self.paddingLeft = 40;
+    self.noteOneDurationPx = 40;
+    self.paddingTop = 60;
+    self.countTakts = 4;
+    self.heightBetweenStrings = 18;
+    self.taktWidth = self.noteOneDurationPx * 5;
+    self.countStrings = self.guitarTunings.length;
+    self.taktHeight = (self.countStrings -1) * self.heightBetweenStrings;
     self.allNotes = [];
     for (var okt = 0; okt < 10; okt++) {
         for (var n in self.notes) {
@@ -112,6 +121,37 @@ function TabulaturEditor(elementId) {
         ctx.fillText(noteText, x - mTxt2.width / 2, y);
     }
 
+    self.render_takts = function(ctx) {
+        for (var n = 0; n < self.countStrings; n++) {
+            ctx.fillText((n+1) + " | " + self.guitarTunings[n], 5, self.paddingTop + n*self.heightBetweenStrings + self.fontSize/3);
+        }
+
+        ctx.fillStyle = "red";
+        for (var i = 0; i <= self.countTakts; i++) {
+            var x = self.paddingLeft + i*self.taktWidth;
+            // ctx.strokeRect(x, 20, self.taktWidth, self.taktHeight);
+            ctx.beginPath();
+            ctx.moveTo(x, self.paddingTop)
+            ctx.lineTo(x, self.paddingTop + self.taktHeight)
+            ctx.stroke();
+
+            if (i < self.countTakts) {
+                var taktLabel = "" + (i + 1)
+                ctx.fillText(taktLabel, x + 10, self.paddingTop - 5);
+            }
+        }
+
+        for (var i = 0; i < self.countTakts; i++) {
+            var x = self.paddingLeft + i*self.taktWidth;
+            for (var n = 0; n < self.countStrings; n++) {
+                ctx.beginPath();
+                ctx.moveTo(x, self.paddingTop + n*self.heightBetweenStrings)
+                ctx.lineTo(x + self.taktWidth, self.paddingTop + n*self.heightBetweenStrings)
+                ctx.stroke();
+            }
+        }
+    }
+
     self.render = function(selectedNote) {
         self.frame++;
         // console.log("render frame#" + self.frame);
@@ -120,55 +160,18 @@ function TabulaturEditor(elementId) {
         ctx.lineWidth = 1;
         ctx.fillStyle = 'rgb(255, 255, 255)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        var noteOneDurationPx = 40;
-        var countStrings = self.guitarTunings.length;
-        var countTakts = 4;
-        var heightBetweenStrings = 18;
-        var taktWidth = noteOneDurationPx * 5;
-        var taktHeight = (countStrings -1) * heightBetweenStrings;
-        var paddingLeft = 40;
-        var paddingTop = 60;
-
-        var fontSize = 12;
-        ctx.font = fontSize + "px Arial";
+        ctx.font = self.fontSize + "px Arial";
         ctx.strokeStyle = 'rgb(10, 10, 10)';
         ctx.fillStyle = "black";
 
         // Legend
         ctx.fillText(
             "N - No finger / Empty string; I - Index finger; M - Middle finger; R - Ring finger; L - Little finger", 
-            paddingLeft + 5,
-            fontSize + 5
+            self.paddingLeft + 5,
+            self.fontSize + 5
         );
 
-        for (var n = 0; n < countStrings; n++) {
-            ctx.fillText((n+1) + " | " + self.guitarTunings[n], 5, paddingTop + n*heightBetweenStrings + fontSize/3);
-        }
-
-        ctx.fillStyle = "red";
-        for (var i = 0; i <= countTakts; i++) {
-            var x = paddingLeft + i*taktWidth;
-            // ctx.strokeRect(x, 20, taktWidth, taktHeight);
-            ctx.beginPath();
-            ctx.moveTo(x, paddingTop)
-            ctx.lineTo(x, paddingTop + taktHeight)
-            ctx.stroke();
-
-            if (i < countTakts) {
-                var taktLabel = "" + (i + 1)
-                ctx.fillText(taktLabel, x + 10, paddingTop - 5);
-            }
-        }
-
-        for (var i = 0; i < countTakts; i++) {
-            var x = paddingLeft + i*taktWidth;
-            for (var n = 0; n < countStrings; n++) {
-                ctx.beginPath();
-                ctx.moveTo(x, paddingTop + n*heightBetweenStrings)
-                ctx.lineTo(x + taktWidth, paddingTop + n*heightBetweenStrings)
-                ctx.stroke();
-            }
-        }
+        self.render_takts(ctx)
 
         var shortFingers = {
             "index": "I",
@@ -192,8 +195,8 @@ function TabulaturEditor(elementId) {
             var nStr = note["string"]
 
             var pos = i + 1 + Math.floor(i / 4);
-            var x = paddingLeft + pos * noteOneDurationPx;
-            var y = paddingTop + (nStr - 1) * heightBetweenStrings;
+            var x = self.paddingLeft + pos * self.noteOneDurationPx;
+            var y = self.paddingTop + (nStr - 1) * self.heightBetweenStrings;
             ctx.strokeStyle = 'rgb(10, 10, 10)';
 
             var rect_x = x - mTxt.width/2 - 2;
@@ -212,7 +215,7 @@ function TabulaturEditor(elementId) {
             var txt_y = y + fontSize / 3;
             ctx.fillText(txt, x - mTxt.width / 2, txt_y);
 
-            var durY = paddingTop + taktHeight + heightBetweenStrings;
+            var durY = self.paddingTop + self.taktHeight + self.heightBetweenStrings;
             self.renderDurationNote(ctx,
                 x,
                 durY,
@@ -226,7 +229,7 @@ function TabulaturEditor(elementId) {
             finger = shortFingers[finger];
 
             var mTxt2 = ctx.measureText(finger);
-            ctx.fillText(finger, x - mTxt2.width / 2, paddingTop - fontSize);
+            ctx.fillText(finger, x - mTxt2.width / 2, self.paddingTop - fontSize);
         }
 
         return self.frame;
