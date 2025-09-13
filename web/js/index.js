@@ -142,7 +142,7 @@ function addNote(_note, _time, _duration, _cleanuptime, idx) {
     } else {
         note["frequency"] = 0;
     }
-    
+
     note["duration"] = _duration;
     note["velocity"] = 0.4;
     note["cleanuptime"] = _cleanuptime;
@@ -151,12 +151,12 @@ function addNote(_note, _time, _duration, _cleanuptime, idx) {
     var startTime = note.time;
     var releaseTime = startTime + note.duration;
     var attackTime = Math.min(releaseTime, startTime + timbre.attack);
-    
+
     var decayTime = 0;
     if (note.frequency > 0) {
         decayTime = timbre.decay * Math.pow(440 / note.frequency, timbre.decayfollow);
     }
-    
+
     var decayStartTime = attackTime;
     var stopTime = releaseTime + timbre.release;
     var doubled = timbre.detune && timbre.detune != 1.0;
@@ -332,7 +332,7 @@ function generate() {
             tabeditor.render();
             pageParams["part"] = btoa(JSON.stringify(resp));
             changeLocationState(pageParams);
-        }, 
+        },
         fail: function(err){
             console.error(err)
             tabeditor.data = [];
@@ -373,7 +373,7 @@ function appendFilterSelectList(_filter) {
         // onchange="myFunction()"
     document.getElementById('filters').innerHTML += _content;
 }
- 
+
 function changedValueOfCheckboxList(e) {
     var filter_name = e.getAttribute('filter-name')
     var newValue = !e.classList.contains("checked");
@@ -465,7 +465,7 @@ function initFilters(callback) {
             if (callback) {
                 callback()
             }
-        }, 
+        },
         fail: function(err) {
             console.error(err)
         }

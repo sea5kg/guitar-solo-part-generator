@@ -16,7 +16,7 @@ function TabulaturEditor(elementId) {
     }
 
     self.frame = 0;
-    
+
     self.setGuitarTuning = function(newTuning) {
         self.guitarTunings = newTuning;
     }
@@ -35,7 +35,7 @@ function TabulaturEditor(elementId) {
             }
         }
     }
-    
+
     self.normalizeDurationNote = function(durationText) {
         var r = durationText.split("/");
         var r0 = parseInt(r[0],10);
@@ -107,7 +107,6 @@ function TabulaturEditor(elementId) {
         }
     }
 
-    
     self.renderNoteName = function(ctx, x, y, noteText) {
         var mTxt2 = ctx.measureText(noteText);
         ctx.fillText(noteText, x - mTxt2.width / 2, y);
@@ -129,23 +128,23 @@ function TabulaturEditor(elementId) {
         var taktHeight = (countStrings -1) * heightBetweenStrings;
         var paddingLeft = 40;
         var paddingTop = 60;
-        
+
         var fontSize = 12;
         ctx.font = fontSize + "px Arial";
         ctx.strokeStyle = 'rgb(10, 10, 10)';
         ctx.fillStyle = "black";
-    
+
         // Legend
         ctx.fillText(
             "N - No finger / Empty string; I - Index finger; M - Middle finger; R - Ring finger; L - Little finger", 
-            paddingLeft + 5, 
+            paddingLeft + 5,
             fontSize + 5
         );
-    
+
         for (var n = 0; n < countStrings; n++) {
             ctx.fillText((n+1) + " | " + self.guitarTunings[n], 5, paddingTop + n*heightBetweenStrings + fontSize/3);
         }
-    
+
         ctx.fillStyle = "red";
         for (var i = 0; i <= countTakts; i++) {
             var x = paddingLeft + i*taktWidth;
@@ -154,7 +153,7 @@ function TabulaturEditor(elementId) {
             ctx.moveTo(x, paddingTop)
             ctx.lineTo(x, paddingTop + taktHeight)
             ctx.stroke();
-    
+
             if (i < countTakts) {
                 var taktLabel = "" + (i + 1)
                 ctx.fillText(taktLabel, x + 10, paddingTop - 5);
@@ -170,8 +169,7 @@ function TabulaturEditor(elementId) {
                 ctx.stroke();
             }
         }
-    
-        
+
         var shortFingers = {
             "index": "I",
             "no": "N",
@@ -179,7 +177,7 @@ function TabulaturEditor(elementId) {
             "middle": "M",
             "little": "L",
         }
-    
+
         var fontSize = 14;
         ctx.font = fontSize + "px Arial";
         for (var i in self.data) {
@@ -192,12 +190,12 @@ function TabulaturEditor(elementId) {
             }
             var mTxt = ctx.measureText(txt);
             var nStr = note["string"]
-            
+
             var pos = i + 1 + Math.floor(i / 4);
             var x = paddingLeft + pos * noteOneDurationPx;
             var y = paddingTop + (nStr - 1) * heightBetweenStrings;
             ctx.strokeStyle = 'rgb(10, 10, 10)';
-            
+
             var rect_x = x - mTxt.width/2 - 2;
             var rect_y = y - fontSize/2 - 2;
             var rect_w = mTxt.width + 4;
@@ -210,23 +208,23 @@ function TabulaturEditor(elementId) {
                 ctx.strokeRect(rect_x, rect_y, rect_w, rect_h);
             }
             ctx.fillStyle = 'rgb(0, 0, 0)';
-    
+
             var txt_y = y + fontSize / 3;
             ctx.fillText(txt, x - mTxt.width / 2, txt_y);
 
             var durY = paddingTop + taktHeight + heightBetweenStrings;
-            self.renderDurationNote(ctx, 
-                x, 
+            self.renderDurationNote(ctx,
+                x,
                 durY,
-                40, 
+                40,
                 note["duration"]
             );
             durY += 60;
             self.renderNoteName(ctx, x, durY, note["note"]);
-    
+
             var finger = note["finger"];
             finger = shortFingers[finger];
-    
+
             var mTxt2 = ctx.measureText(finger);
             ctx.fillText(finger, x - mTxt2.width / 2, paddingTop - fontSize);
         }
