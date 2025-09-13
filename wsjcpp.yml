@@ -55,10 +55,11 @@ distribution:
 
 dependencies:
   - name: "wsjcpp-core"
-    version: "v0.1.7"
+    version: "v0.2.3"
     url: "https://github.com/wsjcpp/wsjcpp-core:master"
     origin: "https://github.com/"
     installation-dir: "./src.wsjcpp/wsjcpp_core"
+    installation-datetime: "Sat, 13 Sep 2025 05:46:33 GMT"
   - name: "wsjcpp-validators"
     version: "v0.1.0"
     url: "https://github.com/wsjcpp/wsjcpp-validators:master"
@@ -69,6 +70,7 @@ dependencies:
     url: "https://github.com/wsjcpp/wsjcpp-light-web-server:master"
     origin: "https://github.com/"
     installation-dir: "./src.wsjcpp/wsjcpp_light_web_server"
+    installation-datetime: "Sat, 13 Sep 2025 05:48:34 GMT"
   - name: "nlohmann/json"
     version: "v3.7.3"
     url: "https://github.com/nlohmann/json:develop"
