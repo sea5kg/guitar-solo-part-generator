@@ -1,5 +1,4 @@
-#ifndef UNIT_TEST_POSITION_NOTE_GUITAR_H
-#define UNIT_TEST_POSITION_NOTE_GUITAR_H
+#pragma once
 
 #include <wsjcpp_unit_tests.h>
 
@@ -7,9 +6,8 @@
 class UnitTestPositionNoteGuitar : public WsjcppUnitTestBase {
     public:
         UnitTestPositionNoteGuitar();
-        virtual void init();
-        virtual bool run();
+
+        virtual bool doBeforeTest() override;
+        virtual void executeTest() override;
+        virtual bool doAfterTest() override;
 };
-
-#endif // UNIT_TEST_POSITION_NOTE_GUITAR_H
-

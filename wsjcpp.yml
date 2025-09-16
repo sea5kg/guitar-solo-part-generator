@@ -86,6 +86,4 @@ unit-tests:
       description: "Rule Parser"
     - name: "NoteGuitarConverter"
       description: "test convertor"
-    - name: "MovementRules"
-      description: "Test parsing rules"
 

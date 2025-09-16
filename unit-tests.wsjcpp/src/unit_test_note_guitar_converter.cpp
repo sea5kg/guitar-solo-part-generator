@@ -10,17 +10,11 @@ UnitTestNoteGuitarConverter::UnitTestNoteGuitarConverter()
     : WsjcppUnitTestBase("UnitTestNoteGuitarConverter") {
 }
 
-// ---------------------------------------------------------------------
-
-void UnitTestNoteGuitarConverter::init() {
-    // nothing
+bool UnitTestNoteGuitarConverter::doBeforeTest() {
+    return true;
 }
 
-// ---------------------------------------------------------------------
-
-bool UnitTestNoteGuitarConverter::run() {
-    bool bTestSuccess = true;
-
+void UnitTestNoteGuitarConverter::executeTest() {
     struct LTest {
         LTest(const std::string &sValue, GuitarTouchFinger nFinger) {
             this->sValue = sValue;
@@ -43,21 +37,20 @@ bool UnitTestNoteGuitarConverter::run() {
         GuitarTouchFinger nExpectedFinger = test.nFinger;
         std::string sGotValue = GuitarSoloPartGeneratorEnums::fingerToValue(nExpectedFinger);
         GuitarTouchFinger nGotFinger = GuitarSoloPartGeneratorEnums::valueToFinger(sExpectedValue);
-        compareS(
-            bTestSuccess, 
-            "Convert '" + std::to_string(nExpectedFinger) + "' -> '" + sExpectedValue + "'", 
-            sGotValue, 
+        compare(
+            "Convert '" + std::to_string(nExpectedFinger) + "' -> '" + sExpectedValue + "'",
+            sGotValue,
             sExpectedValue
         );
 
-        compareN(
-            bTestSuccess, 
-            "Convert '" + sExpectedValue + "' -> '" + std::to_string(nExpectedFinger) + "'", 
-            nGotFinger, 
+        compare(
+            "Convert '" + sExpectedValue + "' -> '" + std::to_string(nExpectedFinger) + "'",
+            nGotFinger,
             nExpectedFinger
         );
     }
-
-    return bTestSuccess;
 }
 
+bool UnitTestNoteGuitarConverter::doAfterTest() {
+    return true;
+}

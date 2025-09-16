@@ -9,16 +9,11 @@ UnitTestParseRule::UnitTestParseRule()
     : WsjcppUnitTestBase("UnitTestParseRule") {
 }
 
-// ---------------------------------------------------------------------
-
-void UnitTestParseRule::init() {
-    // nothing
+bool UnitTestParseRule::doBeforeTest() {
+    return true;
 }
 
-// ---------------------------------------------------------------------
-
-bool UnitTestParseRule::run() {
-    bool bTestSuccess = true;
+void UnitTestParseRule::executeTest() {
     struct LTest {
         LTest(const std::string &sRule, int nExpectedSize) : sRule(sRule), nExpectedSize(nExpectedSize) {};
         std::string sRule;
@@ -44,10 +39,11 @@ bool UnitTestParseRule::run() {
         WsjcppLog::info(TAG, "Test rule: " + test.sRule + " -> " + std::to_string(test.nExpectedSize));
         GuitarSoloPartGeneratorMovementRules rules;
         bool bResult = rules.apply(test.sRule, sError);
-        compareB(bTestSuccess, test.sRule + ", error: " + sError, bResult, true);
-        compareN(bTestSuccess, test.sRule + ", rules size", rules.getSize(), test.nExpectedSize);
+        compare(test.sRule + ", error: " + sError, bResult, true);
+        compare(test.sRule + ", rules size", rules.getSize(), test.nExpectedSize);
     }
-
-    return bTestSuccess;
 }
 
+bool UnitTestParseRule::doAfterTest() {
+    return true;
+}

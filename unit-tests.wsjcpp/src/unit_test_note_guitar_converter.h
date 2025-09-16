@@ -1,5 +1,4 @@
-#ifndef UNIT_TEST_NOTE_GUITAR_CONVERTER_H
-#define UNIT_TEST_NOTE_GUITAR_CONVERTER_H
+#pragma once
 
 #include <wsjcpp_unit_tests.h>
 
@@ -7,9 +6,7 @@
 class UnitTestNoteGuitarConverter : public WsjcppUnitTestBase {
     public:
         UnitTestNoteGuitarConverter();
-        virtual void init();
-        virtual bool run();
+        virtual bool doBeforeTest() override;
+        virtual void executeTest() override;
+        virtual bool doAfterTest() override;
 };
-
-#endif // UNIT_TEST_NOTE_GUITAR_CONVERTER_H
-

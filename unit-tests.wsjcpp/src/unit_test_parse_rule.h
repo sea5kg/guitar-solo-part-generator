@@ -1,15 +1,11 @@
-#ifndef UNIT_TEST_PARSE_RULE_H
-#define UNIT_TEST_PARSE_RULE_H
+#pragma once
 
 #include <wsjcpp_unit_tests.h>
 
-// Description: TODO
 class UnitTestParseRule : public WsjcppUnitTestBase {
     public:
         UnitTestParseRule();
-        virtual void init();
-        virtual bool run();
+        virtual bool doBeforeTest() override;
+        virtual void executeTest() override;
+        virtual bool doAfterTest() override;
 };
-
-#endif // UNIT_TEST_PARSE_RULE_H
-

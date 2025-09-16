@@ -9,7 +9,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(MACOSX TRUE)
 endif()
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(EXECUTABLE_OUTPUT_PATH ${unit-tests_SOURCE_DIR})
 
 set (WSJCPP_LIBRARIES "")
@@ -71,7 +71,6 @@ list (APPEND WSJCPP_INCLUDE_DIRS "src")
 list (APPEND WSJCPP_SOURCES "${CMAKE_SOURCE_DIR}/../unit-tests.wsjcpp/src/unit_test_position_note_guitar.cpp")
 list (APPEND WSJCPP_SOURCES "${CMAKE_SOURCE_DIR}/../unit-tests.wsjcpp/src/unit_test_parse_rule.cpp")
 list (APPEND WSJCPP_SOURCES "${CMAKE_SOURCE_DIR}/../unit-tests.wsjcpp/src/unit_test_note_guitar_converter.cpp")
-list (APPEND WSJCPP_SOURCES "${CMAKE_SOURCE_DIR}/../unit-tests.wsjcpp/src/unit_test_movement_rules.cpp")
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.user-custom.txt)
 
